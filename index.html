@@ -1,29 +1,43 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator</title>
+    <!-- Pengaturan dasar dokumen HTML -->
+    <meta charset="UTF-8"> <!-- Set encoding karakter ke UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Pengaturan viewport untuk responsif -->
+    <title>Kalkulator</title> <!-- Judul halaman di browser -->
+    
+    <!-- Memasukkan framework CSS Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Memasukkan font Roboto dari Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
+        /* Styling untuk body */
         body {
-            font-family: 'Roboto', sans-serif;
-            background-image: url('https://4kwallpapers.com/images/walls/thumbs_3t/4587.png');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
+            font-family: 'Roboto', sans-serif; /* Menggunakan font Roboto */
+            background-image: url('https://4kwallpapers.com/images/walls/thumbs_3t/4587.png'); /* Gambar background */
+            background-repeat: no-repeat; /* Gambar tidak diulang */
+            background-size: cover; /* Gambar menutupi seluruh layar */
+            background-attachment: fixed; /* Background tetap saat di-scroll */
+            background-position: center; /* Posisi gambar di tengah */
         }
     </style>
-    
 </head>
+
+<!-- Body utama dengan tata letak flex -->
 <body class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="p-8 rounded-2xl shadow-2xl border border-gray-200" style="width: 500px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
+    <!-- Container utama kalkulator dengan efek kaca -->
+    <div class="p-8 rounded-2xl shadow-2xl border border-gray-200" 
+         style="width: 500px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
+        
+        <!-- Judul kalkulator -->
         <h1 class="text-center text-4xl font-bold mb-8 text-black">
             KALKULATOR
         </h1>
+
+        <!-- Container input angka -->
         <div class="grid grid-cols-2 gap-6 mb-8">
+            <!-- Input angka pertama -->
             <div>
                 <label for="angka1" class="block mb-2 text-lg font-medium text-gray-700">ANGKA 1</label>
                 <input type="text" id="angka1" 
@@ -32,55 +46,77 @@
                     oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
                     placeholder="Masukkan angka">
             </div>
+            
+            <!-- Input angka kedua -->
             <div>
                 <label for="angka2" class="block mb-2 text-lg font-medium text-gray-700">ANGKA 2</label>
                 <input type="text" id="angka2" 
                     class="w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
                     inputmode="numeric" 
-                    oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '')" 
                     placeholder="Masukkan angka">
             </div>
         </div>
+
+        <!-- Tombol-tombol operasi -->
         <div class="grid grid-cols-4 gap-4 mb-8">
+            <!-- Tombol tambah -->
             <button class="p-4 border border-blue-500 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold 
                         transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm hover:shadow-md"
                     onclick="calculate('+')">
                 +
             </button>
+            
+            <!-- Tombol kurang -->
             <button class="p-4 border border-blue-500 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold 
                         transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm hover:shadow-md"
                     onclick="calculate('-')">
                 -
             </button>
+            
+            <!-- Tombol kali -->
             <button class="p-4 border border-blue-500 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold 
                         transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm hover:shadow-md"
                     onclick="calculate('*')">
                 ×
             </button>
+            
+            <!-- Tombol bagi -->
             <button class="p-4 border border-blue-500 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold 
                         transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm hover:shadow-md"
                     onclick="calculate('/')">
                 ÷
             </button>
         </div>
+
+        <!-- Tempat menampilkan hasil -->
         <div class="mb-6">
             <label for="hasil" class="block mb-2 text-lg font-medium text-gray-700">HASIL :</label>
             <input type="text" id="hasil" 
                    class="w-full p-3 border border-gray-200 rounded-lg bg-gray-50 font-bold 
                           focus:outline-none cursor-default transition-colors"
-                   readonly>
+                   readonly> <!-- Hanya untuk tampilan hasil -->
         </div>
+
+        <!-- Kredit pembuat -->
         <p class="text-center text-lg font-bold">By : Ahmad Haqiq Ulil Albab</p>
     </div>
 
     <script>
+        // Fungsi utama untuk kalkulasi
         function calculate(operation) {
+            // Mengambil nilai dari input
             const angka1 = parseFloat(document.getElementById('angka1').value);
             const angka2 = parseFloat(document.getElementById('angka2').value);
             const hasil = document.getElementById('hasil');
-            
 
-            // Operasi kalkulasi menggunakan switch-case
+            // Validasi input
+            if (isNaN(angka1) || isNaN(angka2)) {
+                hasil.value = 'Error: Masukkan angka yang valid!';
+                return; // Berhenti jika input tidak valid
+            }
+
+            // Pemilihan operasi matematika
             switch(operation) {
                 case '+':
                     hasil.value = angka1 + angka2;
@@ -92,6 +128,7 @@
                     hasil.value = angka1 * angka2;
                     break;
                 case '/':
+                    // Penanganan pembagian dengan nol
                     switch(true) {
                         case (angka2 === 0):
                             hasil.value = 'Error: Pembagian dengan nol!';
